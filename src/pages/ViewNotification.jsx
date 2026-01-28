@@ -13,7 +13,8 @@ export default function ViewNotification() {
     const fetchNotifications = async () => {
       try {
         const res = await apiClient.get("/api/admin/notifications");
-        setNotifications(res.data.data || res.data); // handle both formats
+        setNotifications(res.data.data || res.data);
+        console.log("[ViewNotification] Fetched notifications:", res.data); // handle both formats
       } catch (err) {
         console.error("❌ Error fetching notifications:", err);
         setError("Failed to fetch notifications");

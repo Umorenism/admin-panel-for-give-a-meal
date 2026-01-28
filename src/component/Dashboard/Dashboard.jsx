@@ -14,7 +14,8 @@ export default function Dashboard() {
   const hideHeader = location.pathname.startsWith("/dashboard/settings");
 
   return (
-    <div className="min-h-screen bg-white flex relative">
+    
+    <div className="min-h-screen dark:text-white dark:bg-gray-900 bg-white flex relative">
       {/* Desktop Sidebar */}
       <div className="hidden lg:block">
         <Sidebar />
@@ -43,7 +44,7 @@ export default function Dashboard() {
       )}
 
       {/* Right Side */}
-      <div className="flex-1 lg:ml-[297px]">
+      <div className="flex-1 dark:text-white dark:bg-gray-900 lg:ml-[297px]">
         {/* Conditionally render header */}
         {!hideHeader && <Header setIsOpen={setIsSidebarOpen} />}
 
@@ -51,13 +52,14 @@ export default function Dashboard() {
         <div
           className={`${
             hideHeader ? "pt-0" : "pt-[72px]"
-          } bg-white min-h-screen px-6 py-4`}
+          } bg-white min-h-screen dark:text-white dark:bg-gray-900 px-6 py-4`}
         >
           {/* Nested routes will render here */}
           <Outlet />
         </div>
       </div>
     </div>
+   
   );
 }
 

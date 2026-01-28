@@ -45,19 +45,19 @@ export default function CreateBlog() {
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      className="min-h-screen bg-gray-50 p-8"
+      className="min-h-screen dark:text-white dark:bg-gray-900 bg-white p-8"
     >
       {/* Header */}
-      <div className="max-w-4xl mx-auto text-center mb-12">
+      <div className="max-w-4xl dark:text-white dark:bg-gray-900 mx-auto text-center mb-12">
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-4xl font-extrabold bg-gradient-to-r from-orange-500 to-pink-600 bg-clip-text text-transparent"
+          className="text-4xl dark:text-white dark:bg-gray-900 font-extrabold bg-gradient-to-r from-orange-500 to-pink-600 bg-clip-text text-transparent"
         >
           ✍️ Create a Blog Post
         </motion.h1>
-        <p className="text-gray-600 mt-2 text-lg">
+        <p className="text-gray-600 mt-2 text-lg dark:text-white dark:bg-gray-900">
           Share your ideas, updates, or stories with your audience.
         </p>
       </div>
@@ -67,7 +67,7 @@ export default function CreateBlog() {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl p-10"
+        className="max-w-4xl dark:text-white dark:bg-gray-900 mx-auto bg-white rounded-3xl shadow-xl p-10"
       >
         {error && (
           <div className="bg-red-50 border border-red-200 text-red-700 p-4 rounded-xl mb-6">
@@ -78,7 +78,7 @@ export default function CreateBlog() {
         <form className="space-y-6" onSubmit={submit}>
           {/* Title */}
           <div>
-            <label className="flex items-center gap-2 font-semibold text-gray-700 mb-2">
+            <label className="flex items-center gap-2 dark:text-white dark:bg-gray-900 font-semibold text-gray-700 mb-2">
               <Type size={18} /> Blog Title
             </label>
             <input
@@ -92,7 +92,7 @@ export default function CreateBlog() {
 
           {/* Content */}
           <div>
-            <label className="flex items-center gap-2 font-semibold text-gray-700 mb-2">
+            <label className="flex items-center gap-2 font-semibold dark:text-white dark:bg-gray-900 text-gray-700 mb-2">
               <FileText size={18} /> Content
             </label>
             <textarea
@@ -107,7 +107,7 @@ export default function CreateBlog() {
 
           {/* Image */}
           <div>
-            <label className="flex items-center gap-2 font-semibold text-gray-700 mb-2">
+            <label className="flex items-center gap-2 font-semibold dark:text-white dark:bg-gray-900 text-gray-700 mb-2">
               <ImageIcon size={18} /> Featured Image
             </label>
 
@@ -156,7 +156,7 @@ export default function CreateBlog() {
             <button
               type="button"
               onClick={() => navigate("/dashboard")}
-              className="px-6 py-2.5 rounded-xl border text-gray-600 hover:bg-gray-100 transition"
+              className="px-6 py-2.5 rounded-xl border text-gray-600 hover:bg-gray-100 dark:text-white dark:bg-gray-900 transition"
             >
               Cancel
             </button>

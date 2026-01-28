@@ -1,188 +1,4 @@
 
-// import { useState, useEffect } from "react";
-// import { motion } from "framer-motion";
-// import { getTotalDonation, getAnalytics } from "../api/apiServices";
-// import { Swiper, SwiperSlide } from "swiper/react";
-// import "swiper/css";
-// import "swiper/css/pagination";
-// import { Pagination, Autoplay } from "swiper/modules";
-// import { Heart, Calendar, CreditCard } from "lucide-react";
-// import { Line } from "react-chartjs-2";
-// import {
-//   Chart as ChartJS,
-//   LineElement,
-//   CategoryScale,
-//   LinearScale,
-//   PointElement,
-//   Tooltip,
-//   Legend,
-// } from "chart.js";
-
-// ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend);
-
-// export default function TotalDonationPage() {
-//   const [from, setFrom] = useState("");
-//   const [to, setTo] = useState("");
-//   const [totalDonation, setTotalDonation] = useState(0);
-//   const [paymentMethods, setPaymentMethods] = useState({});
-//   const [loading, setLoading] = useState(false);
-
-//   // Fetch total donation + payment methods
-//   const fetchData = async () => {
-//     setLoading(true);
-//     try {
-//       const [totalRes, analyticsRes] = await Promise.all([
-//         getTotalDonation({ from, to }),
-//         getAnalytics(),
-//       ]);
-
-//       setTotalDonation(totalRes.total ?? 0);
-//       setPaymentMethods(analyticsRes.paymentMethodTotals ?? {});
-//     } catch (err) {
-//       console.error(err);
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   // Optional: fetch on load
-//   useEffect(() => {
-//     fetchData();
-//   }, []);
-
-//   const images = [
-//     "https://images.pexels.com/photos/6646926/pexels-photo-6646926.jpeg",
-//     "https://images.pexels.com/photos/6646901/pexels-photo-6646901.jpeg",
-//     "https://images.pexels.com/photos/8061641/pexels-photo-8061641.jpeg",
-//   ];
-
-//   return (
-//     <motion.div
-//       initial={{ opacity: 0, y: 6 }}
-//       animate={{ opacity: 1, y: 0 }}
-//       transition={{ duration: 0.4 }}
-//       className="space-y-8"
-//     >
-//       {/* Hero Slider */}
-//       <Swiper
-//         modules={[Pagination, Autoplay]}
-//         pagination={{ clickable: true }}
-//         autoplay={{ delay: 3000 }}
-//         loop
-//         className="rounded-xl mt-4 max-w-[1400px] overflow-hidden shadow-lg"
-//       >
-//         {images.map((img, i) => (
-//           <SwiperSlide key={i}>
-//             <div className="relative w-full h-64 md:h-[420px]">
-//               <img src={img} alt={`slide-${i}`} className="absolute inset-0 w-full h-full object-cover" />
-//               <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-//                 <div className="text-center text-white px-6">
-//                   <h2 className="text-2xl md:text-4xl font-bold mb-2">Empower Change</h2>
-//                   <p className="text-sm md:text-lg">
-//                     Together we can make a difference with every donation.
-//                   </p>
-//                 </div>
-//               </div>
-//             </div>
-//           </SwiperSlide>
-//         ))}
-//       </Swiper>
-
-//       {/* Filters */}
-//       <div className="bg-white p-6 rounded-lg shadow space-y-4">
-//         <h2 className="text-2xl text-black font-bold flex items-center gap-2">
-//           <Heart className="text-orange-500" /> Total Donation
-//         </h2>
-//         <div className="flex flex-col md:flex-row gap-3">
-//           <div className="flex items-center gap-2 border p-2 rounded w-full md:w-auto">
-//             <Calendar className="w-4 h-4 text-gray-200" />
-//             <input type="date" value={from} onChange={(e) => setFrom(e.target.value)} className="outline-none flex-1" />
-//           </div>
-//           <div className="flex items-center gap-2 border p-2 rounded w-full md:w-auto">
-//             <Calendar className="w-4 h-4 text-gray-500" />
-//             <input type="date" value={to} onChange={(e) => setTo(e.target.value)} className="outline-none flex-1" />
-//           </div>
-//           <button
-//             onClick={fetchData}
-//             disabled={loading}
-//             className="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition disabled:opacity-50"
-//           >
-//             {loading ? "Loading..." : "Fetch"}
-//           </button>
-//         </div>
-//       </div>
-
-//       {/* Total Donation Result */}
-//       <div className="bg-white p-6 rounded-lg shadow text-center">
-//         <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 0.3 }}>
-//           <h3 className="text-xl font-semibold text-gray-700 mb-2">Donation Summary</h3>
-//           <p className="text-4xl font-bold text-orange-600">${new Intl.NumberFormat().format(totalDonation)}</p>
-//           <p className="text-gray-500 mt-1">
-//             From {from || "Start"} to {to || "Today"}
-//           </p>
-//         </motion.div>
-//       </div>
-
-//       {/* Payment Method Totals */}
-//       {paymentMethods && Object.keys(paymentMethods).length > 0 && (
-//         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-//           {Object.entries(paymentMethods)
-//             .filter(([method]) => ["paystack", "stripe", "espee"].includes(method))
-//             .map(([method, total], idx) => {
-//               const displayName = { paystack: "Paystack", stripe: "Stripe", espee: "Espee" }[method];
-//               return (
-//                 <motion.div
-//                   key={method}
-//                   className="p-6 rounded-xl bg-gradient-to-r from-yellow-500 to-orange-700 text-white shadow-lg"
-//                   initial={{ opacity: 0, y: 20 }}
-//                   animate={{ opacity: 1, y: 0 }}
-//                   transition={{ duration: 0.5, delay: 0.2 + idx * 0.1 }}
-//                 >
-//                   <div className="flex justify-between items-center">
-//                     <div>
-//                       <p className="text-sm opacity-80">{displayName}</p>
-//                       <p className="text-2xl font-bold">{total}</p>
-//                     </div>
-//                     <CreditCard size={32} />
-//                   </div>
-//                   <p className="mt-3 text-sm opacity-90">Total payments received via {displayName}</p>
-//                 </motion.div>
-//               );
-//             })}
-//         </div>
-//       )}
-
-//       {/* Optional Donation Trend Chart (mocked monthly totals) */}
-//       <div className="bg-white p-6 rounded-lg shadow mt-6">
-//         <h3 className="text-lg font-semibold mb-4 text-gray-700">Donation Trend (Monthly)</h3>
-//         <Line
-//           data={{
-//             labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-//             datasets: [
-//               {
-//                 label: "Donations ($)",
-//                 data: [500, 1200, 900, 1400, 1700, totalDonation], // include latest total for demo
-//                 borderColor: "#f97316",
-//                 backgroundColor: "rgba(249,115,22,0.3)",
-//                 tension: 0.4,
-//                 fill: true,
-//                 pointBackgroundColor: "#f97316",
-//               },
-//             ],
-//           }}
-//           options={{
-//             plugins: { legend: { labels: { color: "#374151" } } },
-//             scales: {
-//               x: { ticks: { color: "#374151" } },
-//               y: { ticks: { color: "#374151" } },
-//             },
-//           }}
-//         />
-//       </div>
-//     </motion.div>
-//   );
-// }
-
 
 
 
@@ -476,10 +292,10 @@ export default function TotalDonationPage() {
                 <thead className="bg-gray-50">
                   <tr>
                     <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Donor</th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Campaign</th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Method</th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-900 uppercase tracking-wider">Donor</th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-900 uppercase tracking-wider">Campaign</th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-900 uppercase tracking-wider">Method</th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-900 uppercase tracking-wider">Date</th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
@@ -488,16 +304,16 @@ export default function TotalDonationPage() {
                       <td className="px-6 py-4 whitespace-nowrap font-medium text-orange-700">
                         {formatCurrency(donation.amount / 100)}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-6 py-4 whitespace-nowrap text-gray-900">
                         {donation.donor?.name || "Anonymous"}
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-6 text-gray-900 py-4">
                         {donation.campaign?.title || "—"}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap capitalize">
+                      <td className="px-6 py-4 whitespace-nowrap capitalize text-gray-900">
                         {donation.paymentMethod}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                         {formatDate(donation.createdAt)}
                       </td>
                     </tr>

@@ -14,29 +14,27 @@ export const apiClient = axios.create({
   headers: { "Content-Type": "application/json" },
 });
 
-// Attach user token automatically
+
+
 // apiClient.interceptors.request.use(
 //   (config) => {
-//     const token = localStorage.getItem("access_token"); // user token
+//     const token = localStorage.getItem("access_token");
 //     if (token) {
-//       config.headers.Authorization = `Bearer ${token}`;
-//       console.log("[User Request] Adding access_token");
+//       config.headers.Authorization = `Bearer ${token}`; // ✅ attach token
 //     }
 //     return config;
 //   },
 //   (error) => Promise.reject(error)
 // );
 
-apiClient.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem("access_token");
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`; // ✅ attach token
-    }
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
+
+apiClient.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token"); // ✅ SAME AS ADMIN
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
 
 
 // ------------------- ADMIN API -------------------
@@ -46,14 +44,15 @@ export const adminApi = axios.create({
 });
 
 // Attach admin token automatically
+// apiServices.js
 adminApi.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("admin_token");
+    const token = localStorage.getItem("token");          // ← change to "token"
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
-      console.log("[Admin Request] Adding admin_token");
+      console.log("[Admin Request] Adding token:", token.substring(0, 20) + "...");
     } else {
-      console.warn("[Admin Request] No admin_token found");
+      console.warn("[Admin Request] No token found in localStorage");
     }
     return config;
   },
@@ -63,19 +62,24 @@ adminApi.interceptors.request.use(
 // ------------------- AUTH -------------------
 
 // Admin login
+// apiServices.js
 export const loginAdmin = async ({ email, password }) => {
-  console.log("🔑 Sending login request:", { email, password });
+  console.log("🔑 Sending login request:", { email });
+
   try {
-    const res = await apiClient.post("/api/auth/login", { email, password });
-    const { user, token } = res.data;
+    const res = await apiClient.post("/api/auth/admin/login", { email, password });
+    const { token, admin } = res.data;
 
-    // ✅ Save to keys that AuthContext expects
-    if (token) localStorage.setItem("token", token);
-    if (user) localStorage.setItem("admin", JSON.stringify(user));
+    if (!token) throw new Error("No token received from server");
 
-    console.log("[loginAdmin] Saved token and user to localStorage");
+    localStorage.setItem("token", token);                    // consistent key
+    localStorage.setItem("admin", JSON.stringify(admin));
 
-    return { user, token };
+    // Optional: set default header for both clients
+    apiClient.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    adminApi.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+    return { user: admin, token };
   } catch (err) {
     console.error("❌ Login failed:", err.response?.data || err.message);
     throw err;
@@ -172,18 +176,47 @@ export const updateCampaignStatus = async (id, isApproved) => {
   }
 };
 
-export const createCampaign = async ({ title, description, goalAmount, imageFile }) => {
-  try {
-    const form = new FormData();
-    form.append("title", title);
-    form.append("description", description);
-    form.append("goalAmount", goalAmount);
-    if (imageFile) form.append("image", imageFile);
+// export const createCampaign = async ({ title, description, goalAmount, imageFile }) => {
+//   try {
+//     const form = new FormData();
+//     form.append("title", title);
+//     form.append("description", description);
+//     form.append("goalAmount", goalAmount);
+//     if (imageFile) form.append("image", imageFile);
 
-    const res = await adminApi.post("/api/admin/campaigns", form, { headers: { "Content-Type": "multipart/form-data" } });
+//     const res = await adminApi.post("/api/admin/campaigns", form, { headers: { "Content-Type": "multipart/form-data" } });
+//     return res.data;
+//   } catch (err) {
+//     console.error("❌ [createCampaign] Failed:", err.response?.data || err.message);
+//     throw err;
+//   }
+// };
+
+
+
+export const createCampaign = async ({ title, description, image }) => {
+  try {
+    const payload = {
+      title: title.trim(),
+      description: description.trim(),
+    };
+
+    if (image?.trim()) {
+      payload.image = image.trim();
+    }
+
+    console.log("[createCampaign] Sending payload:", payload);
+
+    const res = await adminApi.post("/api/admin/campaigns", payload);
+
+    console.log("[createCampaign] Success:", res.data);
     return res.data;
   } catch (err) {
-    console.error("❌ [createCampaign] Failed:", err.response?.data || err.message);
+    console.error("❌ [createCampaign] Failed:", {
+      status: err.response?.status,
+      data: err.response?.data,
+      message: err.message,
+    });
     throw err;
   }
 };
@@ -254,9 +287,11 @@ export const getAllDonations = async () => {
 
 
 // Notifications
+// apiServices.js – replace the notification functions
+
 export const getNotifications = async () => {
   try {
-    const res = await apiClient.get("/api/admin/notifications");
+    const res = await adminApi.get("/api/admin/notifications");   // ← adminApi
     return res.data || [];
   } catch (err) {
     console.error("[getNotifications] Failed:", err.response?.data || err.message);
@@ -266,10 +301,18 @@ export const getNotifications = async () => {
 
 export const createNotification = async ({ title, message, type }) => {
   try {
-    const res = await apiClient.post("/api/admin/notifications", { title, message, type });
+    const token = localStorage.getItem("token");
+    console.log("[createNotification] Token present?", !!token);
+    console.log("[createNotification] Token preview:", token ? token.substring(0, 20) + "..." : "NO TOKEN");
+
+    const res = await adminApi.post("/api/admin/notifications", { title, message, type });
     return res.data;
   } catch (err) {
-    console.error("[createNotification] Failed:", err.response?.data || err.message);
+    console.error("[createNotification] Failed:", {
+      status: err.response?.status,
+      data: err.response?.data,
+      message: err.message,
+    });
     throw err;
   }
 };

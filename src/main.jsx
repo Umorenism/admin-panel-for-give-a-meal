@@ -8,6 +8,7 @@ import 'antd/dist/reset.css';
 import './index.css';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { AuthProvider } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
 
 const rootElement = document.getElementById('root');
 if (rootElement) {
@@ -16,9 +17,12 @@ if (rootElement) {
       <StyleProvider hashPriority="high">
         <BrowserRouter>
           <GoogleOAuthProvider clientId="YOUR_GOOGLE_CLIENT_ID">
-            <AuthProvider> {/* ✅ Wrap App only once */}
-              <App />
-            </AuthProvider>
+            <ThemeProvider>
+            {/* ✅ Global theme */}
+              <AuthProvider> {/* ✅ Auth context */}
+                <App />
+              </AuthProvider>
+            </ThemeProvider>
           </GoogleOAuthProvider>
         </BrowserRouter>
       </StyleProvider>
