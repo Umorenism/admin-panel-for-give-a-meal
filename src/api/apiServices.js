@@ -16,18 +16,6 @@ export const apiClient = axios.create({
 
 
 
-// apiClient.interceptors.request.use(
-//   (config) => {
-//     const token = localStorage.getItem("access_token");
-//     if (token) {
-//       config.headers.Authorization = `Bearer ${token}`; // ✅ attach token
-//     }
-//     return config;
-//   },
-//   (error) => Promise.reject(error)
-// );
-
-
 apiClient.interceptors.request.use((config) => {
   const token = localStorage.getItem("token"); // ✅ SAME AS ADMIN
   if (token) {
@@ -175,24 +163,6 @@ export const updateCampaignStatus = async (id, isApproved) => {
     throw err;
   }
 };
-
-// export const createCampaign = async ({ title, description, goalAmount, imageFile }) => {
-//   try {
-//     const form = new FormData();
-//     form.append("title", title);
-//     form.append("description", description);
-//     form.append("goalAmount", goalAmount);
-//     if (imageFile) form.append("image", imageFile);
-
-//     const res = await adminApi.post("/api/admin/campaigns", form, { headers: { "Content-Type": "multipart/form-data" } });
-//     return res.data;
-//   } catch (err) {
-//     console.error("❌ [createCampaign] Failed:", err.response?.data || err.message);
-//     throw err;
-//   }
-// };
-
-
 
 export const createCampaign = async ({ title, description, image }) => {
   try {
