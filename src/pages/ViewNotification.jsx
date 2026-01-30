@@ -66,12 +66,12 @@ export default function ViewNotification() {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      className="min-h-screen bg-gray-50 py-12 px-6"
+      className="min-h-screen dark:text-white dark:bg-gray-900 bg-gray-50 py-12 px-6"
     >
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-5xl dark:text-white dark:bg-gray-900 mx-auto">
         <div className="text-center mb-10">
-          <h1 className="text-3xl font-bold text-gray-800">All Notifications</h1>
-          <p className="text-gray-500">View all alerts, updates, and system messages.</p>
+          <h1 className="text-3xl font-bold text-gray-800 dark:text-white dark:bg-gray-900">All Notifications</h1>
+          <p className="text-gray-500 dark:text-white dark:bg-gray-900">View all alerts, updates, and system messages.</p>
         </div>
 
         {loading ? (
@@ -81,17 +81,17 @@ export default function ViewNotification() {
         ) : notifications.length === 0 ? (
           <div className="text-center py-20 bg-white rounded-xl shadow">
             <FaBell className="text-5xl text-gray-400 mx-auto mb-4" />
-            <p className="text-gray-500">No notifications found.</p>
+            <p className="text-gray-500 dark:text-white dark:bg-gray-900">No notifications found.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid dark:text-white dark:bg-gray-900 grid-cols-1 md:grid-cols-2 gap-6">
             {notifications.map((n) => {
               const { icon, bg, text } = getTypeStyles(n.type);
               return (
                 <motion.div
                   key={n._id}
                   whileHover={{ scale: 1.02 }}
-                  className={`p-6 rounded-xl shadow-sm border border-gray-200 ${bg} transition-all`}
+                  className={`p-6 rounded-xl shadow-sm dark:text-white dark:bg-gray-900 border border-gray-200 ${bg} transition-all`}
                 >
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-3">

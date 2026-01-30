@@ -35,12 +35,12 @@ function StatCard({
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay }}
-      className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm hover:shadow-md transition-all"
+      className="rounded-2xl border border-gray-200 dark:text-white dark:bg-gray-900 bg-white p-6 shadow-sm hover:shadow-md transition-all"
     >
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-sm font-medium text-gray-500">{label}</p>
-          <p className="mt-2 text-3xl font-bold text-gray-900">
+          <p className="text-sm dark:text-white dark:bg-gray-900 font-medium text-gray-500">{label}</p>
+          <p className="mt-2 dark:text-white dark:bg-gray-900 text-3xl font-bold text-gray-900">
             {value !== null && value !== undefined
               ? new Intl.NumberFormat().format(value)
               : "—"}
@@ -48,14 +48,14 @@ function StatCard({
         </div>
 
         <div
-          className={`h-12 w-12 rounded-xl flex items-center justify-center ${accents[accent]}`}
+          className={`h-12 w-12 dark:text-white dark:bg-gray-900 rounded-xl flex items-center justify-center ${accents[accent]}`}
         >
           <Icon className="h-6 w-6" />
         </div>
       </div>
 
       {subtitle && (
-        <p className="mt-4 text-sm text-gray-500 leading-relaxed">
+        <p className="mt-4 dark:text-white dark:bg-gray-900 dark:text-white dark:bg-gray-900 text-sm text-gray-500 leading-relaxed">
           {subtitle}
         </p>
       )}
@@ -90,15 +90,15 @@ export default function AnalyticsPage() {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="min-h-screen bg-gray-100/70 px-6 py-8"
+      className="min-h-screen dark:text-white dark:bg-gray-900 bg-white px-6 py-8"
     >
       <div className="max-w-7xl mx-auto space-y-10">
         {/* ---------------- Header ---------------- */}
         <div className="flex flex-col gap-2">
-          <h1 className="text-3xl font-bold text-gray-900">
+          <h1 className="text-3xl dark:text-white dark:bg-gray-900 font-bold text-gray-900">
             Analytics Overview
           </h1>
-          <p className="text-gray-500">
+          <p className="text-gray-500 dark:text-white dark:bg-gray-900">
             Real-time insights into platform activity and performance
           </p>
         </div>

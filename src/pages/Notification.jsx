@@ -83,21 +83,21 @@ export default function NotificationPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 py-8 sm:px-6 lg:px-8">
+    <div className="min-h-screen dark:text-white dark:bg-gray-900 bg-white px-4 py-8 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto space-y-10">
         {/* Create Form */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-2xl shadow-lg p-6 sm:p-8 border border-gray-200"
+          className="bg-white dark:text-white dark:bg-gray-900 rounded-2xl shadow-lg p-6 sm:p-8 border border-gray-200"
         >
-          <h2 className="text-2xl font-bold mb-6 text-gray-800 flex items-center gap-3">
+          <h2 className="text-2xl dark:text-white dark:bg-gray-900 font-bold mb-6 text-gray-800 flex items-center gap-3">
             <FaBell className="text-orange-600" /> Create Notification
           </h2>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
+              <label className="block dark:text-white dark:bg-gray-900 text-sm font-medium text-gray-700 mb-1">Title</label>
               <input
                 type="text"
                 name="title"
@@ -110,7 +110,7 @@ export default function NotificationPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Message</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-white dark:bg-gray-900">Message</label>
               <textarea
                 name="message"
                 value={formData.message}
@@ -123,7 +123,7 @@ export default function NotificationPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Type</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white dark:bg-gray-900">Type</label>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 {["info", "warning", "success", "urgent"].map((t) => (
                   <button
@@ -173,18 +173,18 @@ export default function NotificationPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="bg-white rounded-2xl shadow-lg p-6 sm:p-8 border border-gray-200"
+          className="bg-white dark:text-white dark:bg-gray-900 rounded-2xl shadow-lg p-6 sm:p-8 border border-gray-200"
         >
           <h2 className="text-2xl font-bold mb-6 text-gray-800 flex items-center gap-3">
-            <FaBell className="text-orange-600" /> Sent Notifications
+            <FaBell className="text-orange-600 dark:text-white dark:bg-gray-900" /> Sent Notifications
           </h2>
 
           {fetching ? (
-            <p className="text-gray-500 text-center py-8">Loading notifications...</p>
+            <p className="text-gray-500 text-center py-8 dark:text-white dark:bg-gray-900">Loading notifications...</p>
           ) : notifications.length === 0 ? (
-            <p className="text-gray-500 text-center py-8">No notifications sent yet.</p>
+            <p className="text-gray-500 text-center py-8 dark:text-white dark:bg-gray-900">No notifications sent yet.</p>
           ) : (
-            <div className="space-y-4">
+            <div className="space-y-4 dark:text-white dark:bg-gray-900">
               {notifications.map((notif) => (
                 <div
                   key={notif._id}

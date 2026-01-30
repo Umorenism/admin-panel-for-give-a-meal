@@ -70,21 +70,21 @@ export default function ProfileSettings() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 py-10 sm:px-6 lg:px-8">
+    <div className="min-h-screen dark:text-white dark:bg-gray-900 bg-white px-4 py-10 sm:px-6 lg:px-8">
       <Toaster position="top-right" />
 
-      <div className="max-w-3xl mx-auto">
+      <div className="max-w-3xl mx-auto dark:text-white dark:bg-gray-900">
         <motion.h1
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-3xl font-bold text-gray-900 mb-2"
+          className="text-3xl dark:text-white dark:bg-gray-900 font-bold text-gray-900 mb-2"
         >
           Profile Settings
         </motion.h1>
-        <p className="text-gray-600 mb-8">Manage your admin account details</p>
+        <p className="text-gray-600  dark:text-white dark:bg-gray-900  mb-8">Manage your admin account details</p>
 
         {error && (
-          <div className="mb-6 p-4 bg-red-50 border border-red-200 text-red-700 rounded-xl">
+          <div className="mb-6 dark:text-white dark:bg-gray-900 p-4 bg-red-50 border border-red-200 text-red-700 rounded-xl">
             {error}
           </div>
         )}
@@ -92,10 +92,10 @@ export default function ProfileSettings() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-200"
+          className="bg-white dark:text-white dark:bg-gray-900 rounded-2xl shadow-lg overflow-hidden border border-gray-200"
         >
           {/* Header / Avatar */}
-          <div className="bg-gradient-to-r from-orange-500 to-orange-600 px-8 py-10 text-center text-white">
+          <div className="bg-gradient-to-r from-orange-500 dark:text-white dark:bg-gray-900 to-orange-600 px-8 py-10 text-center text-white">
             <div className="mx-auto w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-lg bg-gray-200">
               {formData.profilePic ? (
                 <img
@@ -112,7 +112,7 @@ export default function ProfileSettings() {
                 </div>
               )}
             </div>
-            <h2 className="mt-4 text-2xl font-semibold">{profile?.name || "Admin"}</h2>
+            <h2 className="mt-4 text-2xl font-semibold ">{profile?.name || "Admin"}</h2>
             <p className="text-orange-100 mt-1">{profile?.email}</p>
             <p className="text-sm mt-2 opacity-90">
               {profile?.role?.toUpperCase()} • Joined {new Date(profile?.createdAt).toLocaleDateString()}
@@ -120,38 +120,38 @@ export default function ProfileSettings() {
           </div>
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="p-8 space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <form onSubmit={handleSubmit} className="p-8 space-y-6 dark:text-white dark:bg-gray-900">
+            <div className="grid grid-cols-1 md:grid-cols-2 dark:text-white dark:bg-gray-900 gap-6">
               {/* Name */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-white dark:bg-gray-900">Full Name</label>
                 <input
                   type="text"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition"
+                  className="w-full dark:text-white dark:bg-gray-900 px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition"
                   required
                 />
               </div>
 
               {/* Title / Position */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Title / Position</label>
+                <label className="block text-sm font-medium dark:text-white dark:bg-gray-900 text-gray-700 mb-1">Title / Position</label>
                 <input
                   type="text"
                   name="title"
                   value={formData.title}
                   onChange={handleChange}
                   placeholder="e.g. Program Director"
-                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition"
+                  className="w-full dark:text-white dark:bg-gray-900 px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition"
                 />
               </div>
             </div>
 
             {/* Country */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Country</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-white dark:bg-gray-900">Country</label>
               <input
                 type="text"
                 name="country"
@@ -164,7 +164,7 @@ export default function ProfileSettings() {
 
             {/* Profile Picture URL */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium dark:text-white dark:bg-gray-900 text-gray-700 mb-1">
                 Profile Picture URL
               </label>
               <input
@@ -173,11 +173,11 @@ export default function ProfileSettings() {
                 value={formData.profilePic}
                 onChange={handleChange}
                 placeholder="https://example.com/your-photo.jpg"
-                className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition"
+                className="w-full dark:text-white dark:bg-gray-900 px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition"
               />
               {formData.profilePic && (
                 <p className="mt-2 text-sm text-gray-500">
-                  Preview: <a href={formData.profilePic} target="_blank" rel="noopener noreferrer" className="text-orange-600 hover:underline">Open image</a>
+                  Preview: <a href={formData.profilePic} target="_blank" rel="noopener noreferrer" className="text-orange-600 hover:underline dark:text-white dark:bg-gray-900">Open image</a>
                 </p>
               )}
             </div>

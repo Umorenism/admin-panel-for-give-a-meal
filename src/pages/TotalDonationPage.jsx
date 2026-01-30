@@ -147,7 +147,7 @@ export default function TotalDonationPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-12">
+    <div className="min-h-screen dark:text-white dark:bg-gray-900 bg-white pb-12">
       <Toaster position="top-right" richColors />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 space-y-10">
@@ -177,16 +177,16 @@ export default function TotalDonationPage() {
         </Swiper>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid dark:text-white dark:bg-gray-900 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-shadow"
+            className="bg-white dark:text-white dark:bg-gray-900 rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-shadow"
           >
-            <div className="flex items-center justify-between">
+            <div className="flex dark:text-white dark:bg-gray-900 items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-500">Total Raised</p>
+                <p className="text-sm font-medium dark:text-white dark:bg-gray-900 text-gray-500">Total Raised</p>
                 <p className="text-3xl md:text-4xl font-bold text-orange-600 mt-1">
                   {loading ? "—" : formatCurrency(totalDonation)}
                 </p>
@@ -199,12 +199,12 @@ export default function TotalDonationPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-shadow"
+            className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl dark:text-white dark:bg-gray-900 transition-shadow"
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-500">Transactions</p>
-                <p className="text-3xl md:text-4xl font-bold text-green-600 mt-1">
+                <p className="text-sm font-medium text-gray-500 dark:text-white dark:bg-gray-900">Transactions</p>
+                <p className="text-3xl md:text-4xl dark:text-white dark:bg-gray-900 font-bold text-green-600 mt-1">
                   {loading ? "—" : donations.length}
                 </p>
               </div>
@@ -216,12 +216,12 @@ export default function TotalDonationPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-shadow"
+            className="bg-white rounded-2xl shadow-lg p-6 border dark:text-white dark:bg-gray-900 border-gray-100 hover:shadow-xl transition-shadow"
           >
-            <div className="flex items-center justify-between">
+            <div className="flex dark:text-white dark:bg-gray-900 items-center justify-between dark:text-white dark:bg-gray-900">
               <div>
                 <p className="text-sm font-medium text-gray-500">Latest Update</p>
-                <p className="text-xl md:text-2xl font-bold text-blue-600 mt-1">
+                <p className="text-xl md:text-2xl dark:text-white dark:bg-gray-900 font-bold text-blue-600 mt-1">
                   {new Date().toLocaleString("en-NG")}
                 </p>
               </div>
@@ -231,16 +231,16 @@ export default function TotalDonationPage() {
         </div>
 
         {/* Payment Methods Breakdown */}
-        <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 border border-gray-100">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6">Payment Methods Breakdown</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div className="bg-white dark:text-white dark:bg-gray-900 rounded-2xl shadow-lg p-6 md:p-8 border border-gray-100">
+          <h2 className="text-2xl font-bold text-gray-800 mb-6 dark:text-white dark:bg-gray-900">Payment Methods Breakdown</h2>
+          <div className="grid dark:text-white dark:bg-gray-900 grid-cols-1 sm:grid-cols-3 gap-6">
             {["paystack", "stripe", "espee"].map((method) => {
               const amount = (paymentMethods[method] || 0) / 100;
               const name = { paystack: "Paystack", stripe: "Stripe", espee: "Espee" }[method];
               return (
                 <motion.div
                   key={method}
-                  className="bg-gradient-to-br from-orange-50 to-orange-100 p-6 rounded-xl border border-orange-200 text-center hover:shadow-md transition-shadow"
+                  className="bg-gradient-to-br from-orange-50 to-orange-100 p-6 rounded-xl dark:text-white dark:bg-gray-900 border border-orange-200 text-center hover:shadow-md transition-shadow"
                   whileHover={{ scale: 1.03 }}
                 >
                   <p className="text-sm font-medium text-orange-800 mb-2">{name}</p>
@@ -254,8 +254,8 @@ export default function TotalDonationPage() {
         </div>
 
         {/* Dynamic Bar Chart – Powered by real /api/admin/donations data */}
-        <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 border border-gray-100">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6">
+        <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 dark:text-white dark:bg-gray-900 border border-gray-100">
+          <h2 className="text-2xl dark:text-white dark:bg-gray-900 font-bold text-gray-800 mb-6">
             {new Date().getFullYear()} Monthly Donation Overview
           </h2>
           <div className="h-80">
@@ -274,20 +274,20 @@ export default function TotalDonationPage() {
         </div>
 
         {/* All Donations Table */}
-        <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100">
+        <div className="bg-white dark:text-white dark:bg-gray-900 rounded-2xl shadow-lg overflow-hidden border border-gray-100">
           <div className="p-6 md:p-8 border-b border-gray-200">
-            <h2 className="text-2xl font-bold text-gray-800">All Donations</h2>
-            <p className="text-gray-600 mt-1">
+            <h2 className="text-2xl dark:text-white dark:bg-gray-900 font-bold text-gray-800">All Donations</h2>
+            <p className="text-gray-600 dark:text-white dark:bg-gray-900 mt-1">
               Showing {donations.length} successful transactions
             </p>
           </div>
 
           {loading ? (
-            <div className="p-12 text-center text-gray-500">Loading donations...</div>
+            <div className="p-12 text-center text-gray-500 dark:text-white dark:bg-gray-900">Loading donations...</div>
           ) : donations.length === 0 ? (
-            <div className="p-12 text-center text-gray-500">No donations found</div>
+            <div className="p-12 text-center text-gray-500 dark:text-white dark:bg-gray-900">No donations found</div>
           ) : (
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto dark:text-white dark:bg-gray-900">
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                   <tr>
@@ -300,7 +300,7 @@ export default function TotalDonationPage() {
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {donations.map((donation) => (
-                    <tr key={donation._id} className="hover:bg-gray-50 transition-colors">
+                    <tr key={donation._id} className="hover:bg-gray-50 transition-colors dark:text-white dark:bg-gray-900">
                       <td className="px-6 py-4 whitespace-nowrap font-medium text-orange-700">
                         {formatCurrency(donation.amount / 100)}
                       </td>
