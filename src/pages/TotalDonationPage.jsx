@@ -304,16 +304,16 @@ export default function TotalDonationPage() {
                       <td className="px-6 py-4 whitespace-nowrap font-medium text-orange-700">
                         {formatCurrency(donation.amount / 100)}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-gray-900">
+                      <td className="px-6 py-4 whitespace-nowrap dark:text-white dark:bg-gray-900 text-gray-900">
                         {donation.donor?.name || "Anonymous"}
                       </td>
-                      <td className="px-6 text-gray-900 py-4">
+                      <td className="px-6 dark:text-white dark:bg-gray-900 text-gray-900 py-4">
                         {donation.campaign?.title || "—"}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap capitalize text-gray-900">
+                      <td className="px-6 py-4 whitespace-nowrap dark:text-white dark:bg-gray-900 capitalize text-gray-900">
                         {donation.paymentMethod}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      <td className="px-6 dark:text-white dark:bg-gray-900 py-4 whitespace-nowrap text-sm text-gray-900">
                         {formatDate(donation.createdAt)}
                       </td>
                     </tr>
